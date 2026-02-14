@@ -1,0 +1,48 @@
+name: Run AWS Glue Cleaning Job
+
+on:
+  workflow_dispatch:
+
+jobs:
+  glue-job:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Start Glue Job and poll status
+      run: |
+        echo "Starting Glue Job..."
+
+        JOB_RUN_ID=$(aws glue start-job-run \
+          --job-name liquor-sales-cleaning-job-copy \
+          --query 'JobRunId' --output text)
+
+        echo "Glue Job Run ID: $JOB_RUN_ID"
+
+        STATUS="RUNNING"
+
+        while [[ "$STATUS" == "RUNNING" || "$STATUS" == "STARTING" ]]; do
+          echo "Checking job status..."
+          sleep 30
+
+          STATUS=$(aws glue get-job-run \
+            --job-name liquor-sales-cleaning-job-copy \
+            --run-id $JOB_RUN_ID \
+            --query 'JobRun.JobRunState' \
+            --output text)
+
+          echo "Current status: $STATUS"
+        done
+
+        if [[ "$STATUS" != "SUCCEEDED" ]]; then
+          echo "Glue Job failed with status: $STATUS"
+          exit 1
+        fi
+
+        echo "Glue Job completed successfully 🎉"
