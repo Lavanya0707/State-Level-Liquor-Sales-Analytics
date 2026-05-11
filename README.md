@@ -39,15 +39,24 @@ The dataset includes information on sales dates, store locations, products, vend
 7.	GitHub
 
 ## Key Performance Indicators (KPIs):
-1.	Total Sales (Dollars)
-2.	Total Revenue Generated
-3.	Total Volume Sold
-4.	Average Profit Margin
-5.	Sales by City 
-6.	Volume sold by City
-7.	Monthly Sales Trend
-8.	Year Wise Sales Growth
-9.	Top Products by Volume
+1.	Total Revenue
+2.	Total Profit
+3.	Total Bottle Sold
+4.	Total Stores
+5.	Average Bottle Price 
+6.	Market Share by Category
+7.	Top 4 stores
+8.	Store Profitability
+9.	Yearly Revenue Growth
+10.	Geographic Distribution by County
+11.	Total Vendor Payout
+12.	Total Vendors
+13.	Average Order Value
+14.	Total Categories
+15.	Vendor Market Share
+16.	Profitability by Category
+17.	Vendor Production Volume
+18.	Annual Sales Volume Trend
 
 ## Expected Outcome:
 1.	A clear understanding of state-level liquor sales patterns through analysis of historical wholesale transaction data.
